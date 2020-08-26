@@ -63,7 +63,6 @@ class ModalA extends Component {
 
 
     async filter(e) {
-        this.setState({isDataFetching: true});
         e.persist();
         this.setState({
             page: 1,
@@ -72,10 +71,12 @@ class ModalA extends Component {
         clearTimeout(timeOut);
         timeOut = setTimeout(() => {
             this.getSearchData()
-        }, 3000);
+            this.setState({isDataFetching: true});
+        }, 1000);
         if (e.key === 'Enter') {
             clearTimeout(timeOut);
             this.getSearchData()
+            this.setState({isDataFetching: true});
         }
 
     }
@@ -103,7 +104,10 @@ class ModalA extends Component {
     }
 
     async paginationAPI() {
-        this.setState({page: ++this.state.page})
+        this.setState({
+            isDataFetching: true,
+            page: ++this.state.page
+        });
         let url = `https://api.dev.pastorsline.com/api/contacts.json?companyId=171&query=${this.state.searchQuery}&page=${this.state.page}`;
         let response = await axios.get(url, {
             headers: {
@@ -137,7 +141,7 @@ class ModalA extends Component {
                                     <input type="text" className="form-control" id="search-modal-a"
                                            placeholder="Enter search query" onKeyUp={(e) => this.filter(e)}/>
                                 </div>
-                                <div className='d-flex flex-column p-3'>
+                                <div className='position-relative d-flex flex-column p-3'>
                                     <Scrollbars style={{width: 'auto', height: 300}} onScroll={this.handleScroll}>
                                         {this.state.contactsDOM.length === 0 ?
                                             this.state.searchQuery === '' ? 'Loading ...' : 'Not Found' :
@@ -150,8 +154,9 @@ class ModalA extends Component {
                                                         <div>Name: {obj.first_name}</div>
                                                     </div>)
                                             })}
-                                        {this.state.isDataFetching ? 'Loading ...' : 'nusdsdll' }
                                     </Scrollbars>
+                                    {this.state.isDataFetching ? <div className='loading'><i
+                                        className="fa fa-circle-o-notch fa-spin" style={{'fontSize': '30px'}}/></div>: null }
                                 </div>
                                 <ModelButtons contactListType={this.props.contactListType}
                                               changeContactListType={this.props.changeContactListType}/>
