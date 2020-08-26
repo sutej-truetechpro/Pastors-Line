@@ -1,0 +1,47 @@
+$modal-a: #46139f;
+$modal-b: #ff7f50;
+.form-check-input {
+  margin-top: .4rem;
+}
+
+.btn-modal-a, {
+  background-color: $modal-a;
+  color: #fff;
+}
+
+.btn-modal-b {
+  background-color: $modal-b;
+  color: #fff;
+}
+
+.btn-modal-close {
+  background-color: #fff;
+  border-color: $modal-a;
+}
+
+.modal-a .modal-content {
+  background-color: $modal-a;
+}
+
+.modal-b .modal-content {
+  background-color: $modal-b;
+}
+
+.modal-body {
+  .contacts {
+    height: 300px;
+    width: auto;
+  }
+}
+
+.modal-a, .modal-b {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  color: #fff;
+}
+.contact-card {
+  cursor: pointer;
+}
